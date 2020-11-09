@@ -19,6 +19,7 @@ class CreateInvoicesTable extends Migration
             $table->tinyInteger('type')->default(0);
             $table->tinyInteger('payment')->default(0);
             $table->integer('number');
+            $table->text('comments')->nullable();
 
             $table->timestamps();
         });

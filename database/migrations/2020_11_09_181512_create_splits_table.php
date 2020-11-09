@@ -22,6 +22,7 @@ class CreateSplitsTable extends Migration
             $table->decimal('total_pesos_credit', 13, 4)->default(0);
             $table->decimal('total_pesos_debit', 13, 4)->default(0);
             $table->decimal('total_pesos_card', 13, 4)->default(0);
+            $table->text('comments')->nullable();
 
             $table->foreign('income_id')->references('id')->on('incomes')->cascadeOnDelete();
 
