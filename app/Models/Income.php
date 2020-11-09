@@ -22,6 +22,7 @@ class Income extends Model
         'total_pesos_card',
         'total_pesos',
         'total_pesos_USD',
+        'total_voucher',
     ];
 
     protected $dates = ['date', 'created_at', 'updated_at'];

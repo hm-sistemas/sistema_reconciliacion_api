@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Split\SplitRequest;
 use App\Http\Requests\Split\UpdateSplitRequest;
 use App\Http\Resources\Split\SplitResource;
 use App\Models\Split;
@@ -32,8 +33,17 @@ class SplitController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SplitRequest $request)
     {
+        $validated = $request->validated();
+        $split = Split::create($validated);
+
+        return (new SplitResource($split))->additional([
+            'meta' => [
+                'success' => true,
+                'message' => 'Corte ha sido registrado.',
+            ],
+        ]);
     }
 
     /**

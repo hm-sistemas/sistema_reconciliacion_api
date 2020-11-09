@@ -16,7 +16,6 @@ class CreateIncomesTable extends Migration
             $table->date('date');
             $table->integer('year');
             $table->integer('month');
-
             $table->decimal('exchange_rate', 13, 4)->default(0);
             $table->decimal('total', 13, 4)->default(0);
             $table->decimal('total_corresponsal', 13, 4)->default(0);
@@ -26,6 +25,8 @@ class CreateIncomesTable extends Migration
             $table->decimal('total_pesos_card', 13, 4)->default(0);
             $table->decimal('total_pesos', 13, 4)->default(0);
             $table->decimal('total_pesos_USD', 13, 4)->default(0);
+            $table->decimal('total_voucher', 13, 4)->default(0);
+
             $table->text('comments')->nullable();
 
             $table->timestamps();
