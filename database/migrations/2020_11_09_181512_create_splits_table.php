@@ -4,26 +4,26 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateIncomesTable extends Migration
+class CreateSplitsTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up()
     {
-        Schema::create('incomes', function (Blueprint $table) {
+        Schema::create('splits', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->decimal('exchange_rate', 13, 4)->default(0);
+            $table->unsignedBigInteger('income_id');
+            $table->integer('Z');
+
             $table->decimal('total', 13, 4)->default(0);
             $table->decimal('total_corresponsal', 13, 4)->default(0);
             $table->decimal('total_pesos_cash', 13, 4)->default(0);
             $table->decimal('total_pesos_credit', 13, 4)->default(0);
             $table->decimal('total_pesos_debit', 13, 4)->default(0);
             $table->decimal('total_pesos_card', 13, 4)->default(0);
-            $table->decimal('total_pesos', 13, 4)->default(0);
-            $table->decimal('total_pesos_USD', 13, 4)->default(0);
-            $table->text('comments')->nullable();
+
+            $table->foreign('income_id')->references('id')->on('incomes')->cascadeOnDelete();
 
             $table->timestamps();
         });
@@ -34,6 +34,6 @@ class CreateIncomesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('incomes');
+        Schema::dropIfExists('splits');
     }
 }
