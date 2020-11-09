@@ -14,6 +14,9 @@ class CreateIncomesTable extends Migration
         Schema::create('incomes', function (Blueprint $table) {
             $table->id();
             $table->date('date');
+            $table->integer('year');
+            $table->integer('month');
+
             $table->decimal('exchange_rate', 13, 4)->default(0);
             $table->decimal('total', 13, 4)->default(0);
             $table->decimal('total_corresponsal', 13, 4)->default(0);
