@@ -16,6 +16,7 @@ class CreateInvoicesTable extends Migration
             $table->unsignedBigInteger('income_id');
             $table->foreign('income_id')->references('id')->on('incomes')->cascadeOnDelete();
             $table->decimal('amount', 13, 4)->default(0);
+            $table->tinyInteger('currency')->default(0);
             $table->tinyInteger('type')->default(0);
             $table->tinyInteger('payment')->default(0);
             $table->integer('number');
