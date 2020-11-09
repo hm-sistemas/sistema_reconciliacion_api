@@ -17,6 +17,8 @@ class CreateDepositsTable extends Migration
             $table->date('date_from');
             $table->date('date_to');
             $table->text('comments')->nullable();
+            $table->boolean('pending')->default(0);
+
             $table->decimal('total_pesos', 13, 4)->default(0);
             $table->decimal('total', 13, 4)->default(0);
 
