@@ -26,8 +26,10 @@ class CreateIncomesTable extends Migration
             $table->decimal('total_pesos', 13, 4)->default(0);
             $table->decimal('total_pesos_USD', 13, 4)->default(0);
             $table->decimal('total_voucher', 13, 4)->default(0);
-
             $table->text('comments')->nullable();
+
+            $table->unsignedBigInteger('deposit_id')->default(0);
+            $table->foreign('deposit_id')->references('id')->on('deposits')->cascadeOnDelete();
 
             $table->timestamps();
         });

@@ -23,6 +23,7 @@ class Income extends Model
         'total_pesos',
         'total_pesos_USD',
         'total_voucher',
+        'deposit_id',
     ];
 
     protected $dates = ['date', 'created_at', 'updated_at'];
@@ -35,5 +36,10 @@ class Income extends Model
     public function invoices()
     {
         return $this->hasMany('App\Models\Invoice');
+    }
+
+    public function deposit()
+    {
+        return $this->belongsTo('App\Models\Deposit');
     }
 }
