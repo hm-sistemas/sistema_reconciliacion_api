@@ -29,9 +29,6 @@ class DepositResource extends JsonResource
             'date_from2' => $this->date->format('Y-m-d'),
             'date_to' => $this->date->format('M-d-Y'),
             'date_to2' => $this->date->format('Y-m-d'),
-            /* 'procedure' => new ProcedureResource($this->whenLoaded('procedure')),
-    'patient' => new PatientResource($this->whenLoaded('patient')),
-    'doctors' => DoctorResource::collection($this->whenLoaded('doctors')), */
         ];
     }
 }

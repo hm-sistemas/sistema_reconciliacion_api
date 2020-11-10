@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Deposit\DepositRequest;
+use App\Http\Requests\Deposit\UpdateDepositRequest;
+use App\Http\Resources\Deposit\DepositResource;
 use App\Models\Deposit;
 use Illuminate\Http\Request;
 
@@ -12,8 +15,17 @@ class DepositController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $paginate = $request->pagination ?? 25;
+        $deposits = Deposit::paginate($paginate);
+
+        return (DepositResource::collection($deposits))->additional([
+            'meta' => [
+                'success' => true,
+                'message' => 'Depositos han sido cargados.',
+            ],
+        ]);
     }
 
     /**
@@ -21,8 +33,19 @@ class DepositController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DepositRequest $request)
     {
+        $validated = $request->validated();
+        $deposit = Deposit::create($validated);
+
+        //Update related incomes
+
+        return (new DepositResource($deposit))->additional([
+            'meta' => [
+                'success' => true,
+                'message' => 'Deposito ha sido registrado.',
+            ],
+        ]);
     }
 
     /**
@@ -30,8 +53,16 @@ class DepositController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Deposit $Deposit)
+    public function show(Request $request)
     {
+        $deposit = Deposit::findOrFail($request->id);
+
+        return (new DepositResource($deposit))->additional([
+            'meta' => [
+                'success' => true,
+                'message' => 'Deposito ha sido cargado.',
+            ],
+        ]);
     }
 
     /**
@@ -39,8 +70,19 @@ class DepositController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Deposit $Deposit)
+    public function update(UpdateDepositRequest $request)
     {
+        $validated = $request->validated();
+        $deposit = Deposit::findOrFail($validated['id']);
+        $deposit->fill($validated);
+        $deposit->save();
+
+        return (new DepositResource($deposit))->additional([
+            'meta' => [
+                'success' => true,
+                'message' => 'Deposito ha sido actualizado.',
+            ],
+        ]);
     }
 
     /**
@@ -48,7 +90,11 @@ class DepositController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Deposit $Deposit)
+    public function destroy(Request $request)
     {
+        $deposit = Deposit::findOrFail($request['id']);
+        $deposit->delete();
+
+        return response()->json('Deposito ha sido eliminado.', 204);
     }
 }
