@@ -14,9 +14,14 @@ class AuthController extends Controller
     public function register(UserRequest $request)
     {
         $validated = $request->validated();
-        $user = User::create($validated);
+        $user =
+        User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+        ]);
 
-        $token = $user->createToken($request->device_name)->plainTextToken;
+        $token = $user->createToken($request->device)->plainTextToken;
 
         return (new UserResource($user))->additional([
             'token' => $token,
@@ -34,11 +39,11 @@ class AuthController extends Controller
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
+                'message' => 'Las credenciales ingresadas son incorrectas.',
             ]);
         }
 
-        $token = $user->createToken($request->device_name)->plainTextToken;
+        $token = $user->createToken($request->device)->plainTextToken;
 
         return (new UserResource($user))->additional([
             'token' => $token,
