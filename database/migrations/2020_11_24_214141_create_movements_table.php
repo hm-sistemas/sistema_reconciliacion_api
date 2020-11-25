@@ -14,6 +14,7 @@ class CreateMovementsTable extends Migration
         Schema::create('movements', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('income_id');
+            $table->string('card_number');
 
             $table->decimal('amount', 13, 4)->default(0);
             $table->tinyInteger('type')->default(2);
