@@ -25,6 +25,7 @@ class SplitResource extends JsonResource
             'total_pesos_debit' => $this->total_pesos_debit,
             'total_pesos_card' => $this->total_pesos_card,
             'comments' => $this->comments,
+            'income_id' => $this->income_id,
             /* 'procedure' => new ProcedureResource($this->whenLoaded('procedure')),
     'patient' => new PatientResource($this->whenLoaded('patient')),
     'doctors' => DoctorResource::collection($this->whenLoaded('doctors')), */
