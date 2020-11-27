@@ -21,6 +21,7 @@ class DepositResource extends JsonResource
             'total_pesos' => $this->total_pesos,
             'total_dollars' => $this->total_dollars,
             'comments' => $this->comments,
+            'pending' => $this->pending,
             'type' => $this->type(),
             'type2' => $this->type,
             'date' => $this->date->format('M-d-Y'),

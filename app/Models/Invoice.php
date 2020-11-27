@@ -25,7 +25,7 @@ class Invoice extends Model
 
     public function currency()
     {
-        switch ($this->type) {
+        switch ($this->currency) {
             case 0:
                 return 'Pesos';
 

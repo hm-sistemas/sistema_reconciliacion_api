@@ -38,9 +38,4 @@ class Deposit extends Model
                 break;
         }
     }
-
-    public function dates()
-    {
-        return '';
-    }
 }
