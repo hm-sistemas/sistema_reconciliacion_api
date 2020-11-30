@@ -24,6 +24,8 @@ class IncomeRequest extends FormRequest
     public function rules()
     {
         return [
+            'date' => 'required|date',
+            'exchange_rate' => 'required',
         ];
     }
 }

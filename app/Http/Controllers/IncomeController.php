@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Income\IncomeRequest;
 use App\Http\Requests\Income\UpdateIncomeRequest;
 use App\Http\Resources\Income\IncomeResource;
 use App\Models\Income;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class IncomeController extends Controller
@@ -28,15 +30,6 @@ class IncomeController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-    }
-
-    /**
      * Display the specified resource.
      *
      * @return \Illuminate\Http\Response
@@ -45,6 +38,34 @@ class IncomeController extends Controller
     {
         $income = Income::findOrFail($request->id);
         $income->load('splits', 'invoices');
+
+        return (new IncomeResource($income))->additional([
+            'meta' => [
+                'success' => true,
+                'message' => 'Ingreso ha sido cargado.',
+            ],
+        ]);
+    }
+
+    /**
+     * Store a newly created resource in storage or return found.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(IncomeRequest $request)
+    {
+        $validated = $request->validated();
+        $income = Income::where('date', $validated['date'])->first();
+        if (!$income) {
+            $date = Carbon::createFromFormat('Y-m-d', $validated['date']);
+            $income = new Income();
+            $income->exchange_rate = $validated['exchange_rate'];
+            $income->date = $validated['date'];
+            $income->deposit_id = 0;
+            $income->year = $date->year;
+            $income->month = $date->month;
+            $income->save();
+        }
 
         return (new IncomeResource($income))->additional([
             'meta' => [
