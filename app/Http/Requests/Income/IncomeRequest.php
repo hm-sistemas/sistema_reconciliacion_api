@@ -26,6 +26,7 @@ class IncomeRequest extends FormRequest
         return [
             'date' => 'required|date',
             'exchange_rate' => 'required',
+            'comments' => 'string|nullable',
         ];
     }
 }

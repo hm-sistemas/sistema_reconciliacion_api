@@ -56,21 +56,28 @@ class IncomeController extends Controller
     {
         $validated = $request->validated();
         $income = Income::where('date', $validated['date'])->first();
+        $success = true;
+        $message = 'Ingreso ha sido cargado.';
         if (!$income) {
             $date = Carbon::createFromFormat('Y-m-d', $validated['date']);
             $income = new Income();
             $income->exchange_rate = $validated['exchange_rate'];
             $income->date = $validated['date'];
+            $income->comments = $validated['comments'];
             $income->deposit_id = 0;
             $income->year = $date->year;
             $income->month = $date->month;
             $income->save();
+        } else {
+            //already exists
+            $success = false;
+            $message = 'Ingreso con fecha indicada ya existe.';
         }
 
         return (new IncomeResource($income))->additional([
             'meta' => [
-                'success' => true,
-                'message' => 'Ingreso ha sido cargado.',
+                'success' => $success,
+                'message' => $message,
             ],
         ]);
     }
